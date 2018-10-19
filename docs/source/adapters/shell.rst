@@ -16,7 +16,7 @@ Usage
 .. code:: go
 
     // blank import to register adapter
-    import _ "github.com/danryan/hal/adapter/shell"
+    import _ "github.com/jobandtalent/hal/adapter/shell"
 
 Configuration
 ~~~~~~~~~~~~~

@@ -2,10 +2,11 @@ package hipchat
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/daneharrigan/hipchat"
 	"github.com/danryan/env"
-	"github.com/danryan/hal"
-	"strings"
+	"github.com/jobandtalent/hal"
 )
 
 func init() {

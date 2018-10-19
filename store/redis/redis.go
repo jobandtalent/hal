@@ -3,7 +3,7 @@ package redis
 import (
 	"fmt"
 	"github.com/danryan/env"
-	"github.com/danryan/hal"
+	"github.com/jobandtalent/hal"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/garyburd/redigo/redis"
 	"net/url"

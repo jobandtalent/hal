@@ -7,8 +7,9 @@ import (
 	"strings"
 
 	"github.com/danryan/env"
-	"github.com/danryan/hal"
 	"github.com/davecgh/go-spew/spew"
+	"github.com/jobandtalent/hal"
+	"github.com/nlopes/slack"
 	irc "github.com/thoj/go-ircevent"
 )
 
@@ -30,6 +31,7 @@ type adapter struct {
 	ircPassword    string
 	ircConnection  *irc.Connection
 	linkNames      int
+	rtm            *slack.RTM
 }
 
 type config struct {
@@ -41,7 +43,7 @@ type config struct {
 	IconEmoji      string `env:"key=HAL_SLACK_ICON_EMOJI"`
 	IrcEnabled     bool   `env:"key=HAL_SLACK_IRC_ENABLED default=false"`
 	IrcPassword    string `env:"key=HAL_SLACK_IRC_PASSWORD"`
-	ResponseMethod string `env:"key=HAL_SLACK_RESPONSE_METHOD default=http"`
+	ResponseMethod string `env:"key=HAL_SLACK_RESPONSE_METHOD default=rtm"`
 	ChannelMode    string `env:"key=HAL_SLACK_CHANNEL_MODE "`
 }
 
@@ -81,9 +83,9 @@ func (a *adapter) Send(res *hal.Response, strings ...string) error {
 		a.sendIRC(res, strings...)
 
 	} else {
-		err := error(a.sendHTTP(res, strings...))
-		if err != nil {
-			return err
+		for _, str := range strings {
+			out := a.rtm.NewOutgoingMessage(str, res.Message.Room)
+			a.rtm.SendMessage(out)
 		}
 	}
 
@@ -92,14 +94,12 @@ func (a *adapter) Send(res *hal.Response, strings ...string) error {
 
 // Reply sends a direct response
 func (a *adapter) Reply(res *hal.Response, strings ...string) error {
-	newStrings := make([]string, len(strings))
+	newStrings := make([]string, 0)
 	for _, str := range strings {
 		newStrings = append(newStrings, fmt.Sprintf("%s: %s", res.UserName(), str))
 	}
 
-	a.Send(res, newStrings...)
-
-	return nil
+	return a.Send(res, newStrings...)
 }
 
 // Emote is not implemented.
@@ -155,12 +155,10 @@ func (a *adapter) Run() error {
 		go a.startIRCConnection()
 		hal.Logger.Debug("slack - started IRC connection")
 	} else {
-		// set up handlers
-		hal.Logger.Debug("slack - adding HTTP request handlers")
-		hal.Router.HandleFunc("/hal/slack-webhook", a.slackHandler)
-		// Someday we won't need this :D
-		hal.Router.HandleFunc("/hubot/slack-webhook", a.slackHandler)
-		hal.Logger.Debug("slack - added HTTP request handlers")
+		// set up a connection to RTM API
+		hal.Logger.Debug("slack - starting RTM connection")
+		go a.startConnection()
+		hal.Logger.Debug("slack - started RTM connection")
 	}
 
 	hal.Logger.Debugf("slack - channelmode=%v channels=%v", a.channelMode, a.channels)

@@ -3,7 +3,7 @@ package shell
 import (
 	"bufio"
 	"fmt"
-	"github.com/danryan/hal"
+	"github.com/jobandtalent/hal"
 	"io"
 	"log"
 	"os"

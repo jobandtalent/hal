@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/danryan/hal"
-	_ "github.com/danryan/hal/adapter/shell"
-	"github.com/danryan/hal/handler"
-	_ "github.com/danryan/hal/store/memory"
+	"github.com/jobandtalent/hal"
+	_ "github.com/jobandtalent/hal/adapter/shell"
+	"github.com/jobandtalent/hal/handler"
+	_ "github.com/jobandtalent/hal/store/memory"
 	"os"
 )
 

@@ -3,7 +3,7 @@ package slack
 import (
 	"crypto/tls"
 
-	"github.com/danryan/hal"
+	"github.com/jobandtalent/hal"
 	"github.com/thoj/go-ircevent"
 )
 

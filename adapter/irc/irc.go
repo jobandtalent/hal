@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/danryan/env"
-	"github.com/danryan/hal"
+	"github.com/jobandtalent/hal"
 	irc "github.com/thoj/go-ircevent"
 	"strings"
 )

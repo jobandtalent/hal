@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/danryan/hal"
+	"github.com/jobandtalent/hal"
 )
 
 func (a *adapter) newMessageFromHTTP(req *slackRequest) *hal.Message {

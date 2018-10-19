@@ -19,4 +19,4 @@ Usage
 .. code:: go
 
     // blank import to register adapter
-    import _ "github.com/danryan/hal/store/memory"
+    import _ "github.com/jobandtalent/hal/store/memory"

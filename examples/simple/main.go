@@ -3,9 +3,9 @@ package main
 import (
 	"os"
 
-	"github.com/danryan/hal"
-	_ "github.com/danryan/hal/adapter/shell"
-	_ "github.com/danryan/hal/store/memory"
+	"github.com/jobandtalent/hal"
+	_ "github.com/jobandtalent/hal/adapter/shell"
+	_ "github.com/jobandtalent/hal/store/memory"
 )
 
 var pingHandler = hal.Hear(`ping`, func(res *hal.Response) error {

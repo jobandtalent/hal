@@ -1,7 +1,7 @@
 package haltest
 
 import (
-	"github.com/danryan/hal"
+	"github.com/jobandtalent/hal"
 )
 
 func init() {

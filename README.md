@@ -13,9 +13,9 @@ Hal is Go all the way down, and uses standard packages wherever possible. For an
 ## Resources
 
 * [Project documentation](http://hal.readthedocs.org)
-* [API documentation](http://godoc.org/github.com/danryan/hal)
+* [API documentation](http://godoc.org/github.com/jobandtalent/hal)
 * [Mailing list](https://groups.google.com/group/hal-bot)
-* [Bugs and feature requests](https://github.com/danryan/hal/issues)
+* [Bugs and feature requests](https://github.com/jobandtalent/hal/issues)
 * IRC - ##hal on irc.freenode.net
 
 ## Is it any good?

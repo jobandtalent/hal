@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
-	"github.com/danryan/hal"
-	_ "github.com/danryan/hal/adapter/irc"
-	_ "github.com/danryan/hal/adapter/shell"
-	_ "github.com/danryan/hal/adapter/slack"
-	_ "github.com/danryan/hal/adapter/test"
-	_ "github.com/danryan/hal/store/redis"
+	"github.com/jobandtalent/hal"
+	_ "github.com/jobandtalent/hal/adapter/irc"
+	_ "github.com/jobandtalent/hal/adapter/shell"
+	_ "github.com/jobandtalent/hal/adapter/slack"
+	_ "github.com/jobandtalent/hal/adapter/test"
+	_ "github.com/jobandtalent/hal/store/redis"
 	"github.com/davecgh/go-spew/spew"
 	"os"
 )
