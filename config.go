@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/danryan/env"
+	"github.com/sirupsen/logrus"
 )
 
 // Config struct
@@ -32,7 +32,7 @@ func newLogger() *logrus.Logger {
 	}
 	logger := logrus.New()
 	logger.Level = level
-	
+
 	return logger
 }
 
