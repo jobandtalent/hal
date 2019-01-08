@@ -116,8 +116,8 @@ func (h *FullHandler) Handle(res *Response) error {
 	case h.Match(res):
 		res.Match = h.Regexp().FindAllStringSubmatch(res.Text(), -1)[0]
 		return h.handler.Run(res)
-	// if we don't find a match, return
+		// if we don't find a match, return
 	default:
-		return nil
+		return ErrNotMatched
 	}
 }
