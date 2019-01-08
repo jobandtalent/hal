@@ -102,7 +102,7 @@ func (robot *Robot) Receive(msg *Message) error {
 	return nil
 }
 
-// SetDefaultHandler is the handler executed when no other is available
+// SetDefaultHandler sets what handler should be executed when no other matches
 func (robot *Robot) SetDefaultHandler(dh *Handler) {
 	robot.defaultHandler = dh
 }
