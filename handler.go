@@ -74,7 +74,7 @@ func (h *Handler) Handle(res *Response) error {
 	}
 }
 
-// IsRespond func
+// IsRespond func checks whether a Message is addressing the bot (RESPOND) or not
 func (h *Handler) IsRespond(res *Response) bool {
 	r := regexp.MustCompile(respondRegexp)
 	return r.Match([]byte(res.Message.Text))
