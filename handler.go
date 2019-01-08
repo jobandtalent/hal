@@ -74,6 +74,12 @@ func (h *Handler) Handle(res *Response) error {
 	}
 }
 
+// IsRespond func
+func (h *Handler) IsRespond(res *Response) bool {
+	r := regexp.MustCompile(respondRegexp)
+	return r.Match([]byte(res.Message.Text))
+}
+
 func (h *Handler) regexp() *regexp.Regexp {
 	return handlerRegexp(h.Method, h.Pattern)
 }
@@ -116,7 +122,8 @@ func (h *FullHandler) Handle(res *Response) error {
 	case h.Match(res):
 		res.Match = h.Regexp().FindAllStringSubmatch(res.Text(), -1)[0]
 		return h.handler.Run(res)
-		// if we don't find a match, return
+
+	// if we don't find a match, return
 	default:
 		return ErrNotMatched
 	}

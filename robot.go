@@ -94,7 +94,8 @@ func (robot *Robot) Receive(msg *Message) error {
 	}
 
 	if robot.defaultHandler != nil &&
-		notMatchedCount == len(robot.handlers) {
+		notMatchedCount == len(robot.handlers) &&
+		(*robot.defaultHandler).IsRespond(response) {
 		return (*robot.defaultHandler).Run(response)
 	}
 
