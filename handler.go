@@ -11,6 +11,9 @@ var (
 	respondRegexp = fmt.Sprintf(`^(?:@?(?:%s|%s)[:,]?)\s+(?:(.+))`, Config.Alias, Config.Name)
 	// RespondRegexpTemplate expands the RespondRegexp
 	respondRegexpTemplate = fmt.Sprintf(`^(?:@?(?:%s|%s)[:,]?)\s+(?:${1})`, Config.Alias, Config.Name)
+
+	// ErrNotMatched error to flag the case when there has been no match in the current handler
+	ErrNotMatched = fmt.Errorf("Handler not Matched")
 )
 
 // handler is an interface for objects to implement in order to respond to messages.
@@ -67,7 +70,7 @@ func (h *Handler) Handle(res *Response) error {
 		return h.Run(res)
 	// if we don't find a match, return
 	default:
-		return nil
+		return ErrNotMatched
 	}
 }
 
