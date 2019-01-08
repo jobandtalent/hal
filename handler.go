@@ -13,7 +13,7 @@ var (
 	respondRegexpTemplate = fmt.Sprintf(`^(?:@?(?:%s|%s)[:,]?)\s+(?:${1})`, Config.Alias, Config.Name)
 
 	// ErrNotMatched error to flag the case when there has been no match in the current handler
-	ErrNotMatched = fmt.Errorf("Handler not Matched")
+	ErrNotMatched = fmt.Errorf("Handler not matched")
 )
 
 // handler is an interface for objects to implement in order to respond to messages.
