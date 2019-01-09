@@ -10,14 +10,15 @@ import (
 
 // Robot receives messages from an adapter and sends them to listeners
 type Robot struct {
-	Name       string
-	Alias      string
-	Adapter    Adapter
-	Store      Store
-	handlers   []handler
-	Users      *UserMap
-	Auth       *Auth
-	signalChan chan os.Signal
+	Name           string
+	Alias          string
+	Adapter        Adapter
+	Store          Store
+	handlers       []handler
+	Users          *UserMap
+	Auth           *Auth
+	signalChan     chan os.Signal
+	defaultHandler *Handler
 }
 
 // Handlers returns the robot's handlers
@@ -78,15 +79,32 @@ func (robot *Robot) Receive(msg *Message) error {
 		robot.Users.Save()
 	}
 
+	response := NewResponseFromMessage(robot, msg)
+	notMatchedCount := 0
 	for _, handler := range robot.handlers {
-		response := NewResponseFromMessage(robot, msg)
 
 		if err := handler.Handle(response); err != nil {
-			Logger.Error(err)
-			return err
+			if err != ErrNotMatched {
+				Logger.Error(err)
+				return err
+			}
+
+			notMatchedCount++
 		}
 	}
+
+	if robot.defaultHandler != nil &&
+		notMatchedCount == len(robot.handlers) &&
+		(*robot.defaultHandler).IsRespond(response) {
+		return (*robot.defaultHandler).Run(response)
+	}
+
 	return nil
+}
+
+// SetDefaultHandler sets what handler should be executed when no other matches
+func (robot *Robot) SetDefaultHandler(dh *Handler) {
+	robot.defaultHandler = dh
 }
 
 // Run initiates the startup process
