@@ -9,7 +9,7 @@ import (
 	"github.com/danryan/env"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/jobandtalent/hal"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 	irc "github.com/thoj/go-ircevent"
 )
 
