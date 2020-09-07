@@ -2,7 +2,7 @@ package slack
 
 import (
 	"github.com/jobandtalent/hal"
-	"github.com/nlopes/slack"
+	"github.com/slack-go/slack"
 )
 
 func (a *adapter) startConnection() {

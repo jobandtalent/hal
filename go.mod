@@ -1,16 +1,14 @@
 module github.com/jobandtalent/hal
 
+go 1.15
+
 require (
 	github.com/daneharrigan/hipchat v0.0.0-20170512185232-835dc879394a
 	github.com/danryan/env v0.0.0-20140706054224-bc567f4d372a
 	github.com/davecgh/go-spew v1.1.1
 	github.com/gomodule/redigo v2.0.0+incompatible
-	github.com/gorilla/websocket v1.4.0 // indirect
-	github.com/lusis/go-slackbot v0.0.0-20180109053408-401027ccfef5 // indirect
-	github.com/lusis/slack-test v0.0.0-20180109053238-3c758769bfa6 // indirect
-	github.com/nlopes/slack v0.4.0
-	github.com/pkg/errors v0.8.0 // indirect
-	github.com/sirupsen/logrus v1.1.1
-	github.com/thoj/go-ircevent v0.0.0-20180816043103-14f3614f28c3
-	golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/sirupsen/logrus v1.6.0
+	github.com/slack-go/slack v0.6.6
+	github.com/thoj/go-ircevent v0.0.0-20190807115034-8e7ce4b5a1eb
 )
