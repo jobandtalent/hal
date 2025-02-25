@@ -9,6 +9,6 @@ require (
 	github.com/gomodule/redigo v2.0.0+incompatible
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.6.0
-	github.com/slack-go/slack v0.6.6
+	github.com/slack-go/slack v0.10.3
 	github.com/thoj/go-ircevent v0.0.0-20190807115034-8e7ce4b5a1eb
 )

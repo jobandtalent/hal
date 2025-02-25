@@ -10,6 +10,7 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/jobandtalent/hal"
 	"github.com/slack-go/slack"
+	"github.com/slack-go/slack/socketmode"
 	irc "github.com/thoj/go-ircevent"
 )
 
@@ -19,7 +20,8 @@ func init() {
 
 type adapter struct {
 	hal.BasicAdapter
-	token          string
+	token          string // xoxb-
+	botToken       string // xapp-
 	team           string
 	mode           string
 	channels       []string
@@ -31,11 +33,12 @@ type adapter struct {
 	ircPassword    string
 	ircConnection  *irc.Connection
 	linkNames      int
-	rtm            *slack.RTM
+	socketmode     *socketmode.Client
 }
 
 type config struct {
 	Token          string `env:"key=HAL_SLACK_TOKEN required"`
+	BotToken       string `env:"key=HAL_SLACK_BOT_TOKEN required"`
 	Team           string `env:"key=HAL_SLACK_TEAM required"`
 	Channels       string `env:"key=HAL_SLACK_CHANNELS"`
 	Mode           string `env:"key=HAL_SLACK_MODE"`
@@ -43,7 +46,7 @@ type config struct {
 	IconEmoji      string `env:"key=HAL_SLACK_ICON_EMOJI"`
 	IrcEnabled     bool   `env:"key=HAL_SLACK_IRC_ENABLED default=false"`
 	IrcPassword    string `env:"key=HAL_SLACK_IRC_PASSWORD"`
-	ResponseMethod string `env:"key=HAL_SLACK_RESPONSE_METHOD default=rtm"`
+	ResponseMethod string `env:"key=HAL_SLACK_RESPONSE_METHOD default=socketmode"`
 	ChannelMode    string `env:"key=HAL_SLACK_CHANNEL_MODE "`
 }
 
@@ -54,6 +57,7 @@ func New(r *hal.Robot) (hal.Adapter, error) {
 	channels := strings.Split(c.Channels, ",")
 	a := &adapter{
 		token:          c.Token,
+		botToken:       c.BotToken,
 		team:           c.Team,
 		channels:       channels,
 		channelMode:    c.ChannelMode,
@@ -84,8 +88,7 @@ func (a *adapter) Send(res *hal.Response, strings ...string) error {
 
 	} else {
 		for _, str := range strings {
-			out := a.rtm.NewOutgoingMessage(str, res.Message.Room)
-			a.rtm.SendMessage(out)
+			a.socketmode.PostMessage(res.Message.Room, slack.MsgOptionText(str, false))
 		}
 	}
 
@@ -155,10 +158,10 @@ func (a *adapter) Run() error {
 		go a.startIRCConnection()
 		hal.Logger.Debug("slack - started IRC connection")
 	} else {
-		// set up a connection to RTM API
-		hal.Logger.Debug("slack - starting RTM connection")
+		// set up a connection to events api via websockets API
+		hal.Logger.Debug("slack - starting socketmode")
 		go a.startConnection()
-		hal.Logger.Debug("slack - started RTM connection")
+		hal.Logger.Debug("slack - started socketmode")
 	}
 
 	hal.Logger.Debugf("slack - channelmode=%v channels=%v", a.channelMode, a.channels)
