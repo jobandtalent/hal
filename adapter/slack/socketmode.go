@@ -13,14 +13,14 @@ import (
 func (a *adapter) startConnection() {
 	api := slack.New(
 		a.token,
-		slack.OptionDebug(true),
+		slack.OptionDebug(false),
 		slack.OptionLog(log.New(os.Stdout, "api: ", log.Lshortfile|log.LstdFlags)),
 		slack.OptionAppLevelToken(a.botToken),
 	)
 
 	client := socketmode.New(
 		api,
-		socketmode.OptionDebug(true),
+		socketmode.OptionDebug(false),
 		socketmode.OptionLog(log.New(os.Stdout, "socketmode: ", log.Lshortfile|log.LstdFlags)),
 	)
 
